@@ -30,4 +30,5 @@ Part of a larger Donate Project
 ### For Both
 
 * [ ] `login` opens interface to create login settings file
-* [ ] `` empty command will display help / usage message
+* [x] `help` `--help` or `-h` will display help / usage message
+  * [x] `` empty command will display help / usage message

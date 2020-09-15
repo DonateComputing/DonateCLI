@@ -8,10 +8,7 @@ func Run(args []string) error {
 
 	switch args[1] {
 
-	case "help":
-		return helpCommand()
-
-	case "-h":
+	case "help", "--help", "-h":
 		return helpCommand()
 
 	default:
