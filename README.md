@@ -4,10 +4,11 @@ Part of a larger Donate Project
 
 ## Features
 
-### For Runner:
+### For Runner
 
 * [ ] `ps` lists all jobs currently being run on client
-* [ ] `hub ps` lists all jobs waiting for runner
+  * [ ] `-a` include completed jobs on client
+* [ ] `hub` and `hub ps` list all jobs waiting for runner
   * [ ] `-a` include jobs being run or completed
   * [ ] `-u` filter to only jobs belonging to or run by user
 * [ ] `start <id>` checks out and runs job with id
@@ -16,15 +17,17 @@ Part of a larger Donate Project
 * [ ] `pause` pauses all jobs
   * [ ] `pause <id>` pauses only job with given id
 * [ ] `unpause` unpauses all paused jobs
-  * [ ] `unpause <id` unpauses only job with given id
+  * [ ] `unpause <id>` unpauses only job with given id
 * [ ] `prune` autoremove all 'completed' jobs
 
-### For Author:
+### For Author
 
 * [ ] `add` opens interface to guide thru making new job
-  * [ ] `add <id> <description>` will create job directly
+  * [ ] `add <title> <description> <image>` will create job directly
+    * [ ] `--allow-multiple` on command above will allow multiple runners
 * [ ] `rm <id>` removes job from hub
 
-### For Both:
+### For Both
 
 * [ ] `login` opens interface to create login settings file
+* [ ] `` empty command will display help / usage message
