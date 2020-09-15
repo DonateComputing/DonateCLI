@@ -1,10 +1,11 @@
 package main
 
 import (
-	"fmt"
 	"os"
+
+	"github.com/mfigurski80/DonateCLI/cli"
 )
 
 func main() {
-	fmt.Println(os.Args[1:])
+	cli.Run(os.Args)
 }
