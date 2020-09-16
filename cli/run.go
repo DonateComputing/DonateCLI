@@ -10,6 +10,7 @@ func Run(args []string) error {
 		NewPsCommand(),
 		NewHubCommand(),
 		NewStartCommand(),
+		NewStopCommand(),
 	}
 
 	for _, cmd := range cmds {

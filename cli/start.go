@@ -34,6 +34,6 @@ func (c *StartCommand) Run() error {
 		return errors.New("ID of public runnable job is required")
 	}
 
-	fmt.Printf("Running START '%v' command!", c.fs.Arg(0))
+	fmt.Printf("Running START '%v' command\n", c.fs.Arg(0))
 	return nil
 }
