@@ -8,6 +8,7 @@ func Run(args []string) error {
 
 	cmds := []Runner{
 		NewPsCommand(),
+		NewHubCommand(),
 	}
 
 	for _, cmd := range cmds {

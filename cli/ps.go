@@ -34,6 +34,6 @@ func (c *PsCommand) Init(args []string) error {
 
 // Run executes ps command
 func (c *PsCommand) Run() error {
-	fmt.Printf("Running PS command! Flag -a is set to '%v'\n", c.isAll)
+	fmt.Printf("Running PS command! Flag -a is '%v'. Args are '%v'\n", c.isAll, c.fs.Args())
 	return nil
 }
