@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"errors"
 	"fmt"
 )
 
@@ -11,7 +12,7 @@ func helpCommand() error {
 
 func errorCommand(m string) error {
 	fmt.Println(m)
-	return fmt.Errorf(m)
+	return errors.New(m)
 }
 
 func dneCommand(c string) error {
