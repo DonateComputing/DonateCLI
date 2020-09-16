@@ -14,6 +14,7 @@ func Run(args []string) error {
 		NewPauseCommand(),
 		NewUnpauseCommand(),
 		NewPruneCommand(),
+		NewAddCommand(),
 	}
 
 	for _, cmd := range cmds {
