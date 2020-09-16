@@ -5,14 +5,14 @@ import (
 	"fmt"
 )
 
-// NewPauseCommand creates default stop command
+// NewPauseCommand creates default pause command
 func NewPauseCommand() *PauseCommand {
 	return &PauseCommand{
 		fs: flag.NewFlagSet("pause", flag.ContinueOnError),
 	}
 }
 
-// PauseCommand stops a currently running job, uploads partial image, and returns it to hub
+// PauseCommand pauses a currently running job without stopping it
 type PauseCommand struct {
 	fs *flag.FlagSet
 }
@@ -27,7 +27,7 @@ func (c *PauseCommand) Init(args []string) error {
 	return c.fs.Parse(args)
 }
 
-// Run executes the stop command
+// Run executes the pause command
 func (c *PauseCommand) Run() error {
 	fmt.Printf("Running PAUSE command. Args are %v\n", c.fs.Args())
 	return nil
