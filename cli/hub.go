@@ -36,6 +36,13 @@ func (c *HubCommand) Init(args []string) error {
 
 // Run executes hub command
 func (c *HubCommand) Run() error {
+
+	if args := c.fs.Args(); c.fs.NArg() > 0 && args[0] == "ps" {
+		recmd := NewHubCommand()
+		recmd.Init(args[1:])
+		return recmd.Run()
+	}
+
 	fmt.Printf("Running HUB command! Flag -a is '%v', flag -u is '%v'. Args are '%v'\n", c.isAll, c.isUser, c.fs.Args())
 	return nil
 }
