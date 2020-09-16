@@ -13,6 +13,7 @@ func Run(args []string) error {
 		NewStopCommand(),
 		NewPauseCommand(),
 		NewUnpauseCommand(),
+		NewPruneCommand(),
 	}
 
 	for _, cmd := range cmds {
