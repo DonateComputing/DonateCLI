@@ -16,6 +16,7 @@ func Run(args []string) error {
 		NewPruneCommand(),
 		NewAddCommand(),
 		NewRmCommand(),
+		NewLoginCommand(),
 	}
 
 	for _, cmd := range cmds {
