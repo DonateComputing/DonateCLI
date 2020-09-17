@@ -126,3 +126,31 @@ func DeleteJob(a AuthStruct, id string) error {
 
 	return nil
 }
+
+// TakeJob tags a job as currently being run by user
+func TakeJob(a AuthStruct, id string) error {
+	req, err := http.NewRequest("PUT", domain+"/job/"+id+"/take", nil)
+	if err != nil {
+		return err
+	}
+	req.SetBasicAuth(a.Username, a.Password)
+
+	res, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	bodyBytes, err := ioutil.ReadAll(res.Body)
+	defer res.Body.Close()
+	if res.StatusCode != 200 {
+		return errors.New("Rejected by server: " + string(bodyBytes))
+	}
+
+	var r CheckedResourceResponse
+	err = json.Unmarshal(bodyBytes, &r)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

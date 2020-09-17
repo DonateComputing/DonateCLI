@@ -59,3 +59,9 @@ type CreatedResourceResponse struct {
 	Message   string `json:"message"`
 	CreatedID string `json:"createdId"`
 }
+
+// CheckedResourceResponse is struct recieved when taking/returning job
+type CheckedResourceResponse struct {
+	Message   string `json:"message"`
+	CheckedID string `json:"checkedId"`
+}
