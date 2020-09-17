@@ -18,4 +18,5 @@ func main() {
 	// fmt.Println(api.GetUser(auth))
 	// fmt.Println(api.AddJob(auth, job))
 	fmt.Println(api.GetJobs())
+	// fmt.Println(api.DeleteJob(auth, "1600318152628776859"))
 }

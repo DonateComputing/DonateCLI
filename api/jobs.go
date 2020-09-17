@@ -105,3 +105,24 @@ func GetJob(id string) (*JobStruct, error) {
 
 	return &job, nil
 }
+
+// DeleteJob removes job with given Id and all references to it
+func DeleteJob(a AuthStruct, id string) error {
+	req, err := http.NewRequest("DELETE", domain+"/job/"+id, nil)
+	if err != nil {
+		return err
+	}
+	req.SetBasicAuth(a.Username, a.Password)
+
+	res, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+	if res.StatusCode != 200 {
+		bodyBytes, _ := ioutil.ReadAll(res.Body)
+		defer res.Body.Close()
+		return errors.New("Rejected by server: " + string(bodyBytes))
+	}
+
+	return nil
+}
