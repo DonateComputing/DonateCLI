@@ -1,8 +1,11 @@
 package api
 
 import (
+	"net/http"
 	"os"
 )
+
+var client = &http.Client{}
 
 var domain = getDomain()
 

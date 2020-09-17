@@ -8,8 +8,6 @@ import (
 	"net/http"
 )
 
-var client = &http.Client{}
-
 // Register sends a register request
 func Register(a AuthStruct) error {
 	buf, _ := json.Marshal(a)
@@ -62,8 +60,8 @@ func GetUser(a AuthStruct) (*UserStruct, error) {
 	return &user, nil
 }
 
-// UpdatePassword updates the user password to new given
-func UpdatePassword(a AuthStruct, newPassword string) error {
+// UpdateUserPassword updates the user password to new given
+func UpdateUserPassword(a AuthStruct, newPassword string) error {
 	newUser := MakeAuthStruct(a.Username, newPassword)
 	buf, _ := json.Marshal(newUser)
 	req, err := http.NewRequest("PUT", domain+"/user", bytes.NewBuffer(buf))
@@ -77,7 +75,27 @@ func UpdatePassword(a AuthStruct, newPassword string) error {
 	if err != nil {
 		return err
 	}
+	if res.StatusCode != 200 {
+		bodyBytes, _ := ioutil.ReadAll(res.Body)
+		defer res.Body.Close()
+		return errors.New("Rejected by server: " + string(bodyBytes))
+	}
 
+	return nil
+}
+
+// DeleteUser removes user and all related jobs and references from public hub
+func DeleteUser(a AuthStruct) error {
+	req, err := http.NewRequest("DELETE", domain+"/user", nil)
+	if err != nil {
+		return err
+	}
+	req.SetBasicAuth(a.Username, a.Password)
+
+	res, err := client.Do(req)
+	if err != nil {
+		return err
+	}
 	if res.StatusCode != 200 {
 		bodyBytes, _ := ioutil.ReadAll(res.Body)
 		defer res.Body.Close()
