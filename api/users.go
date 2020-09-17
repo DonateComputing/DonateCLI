@@ -61,3 +61,28 @@ func GetUser(a AuthStruct) (*UserStruct, error) {
 
 	return &user, nil
 }
+
+// UpdatePassword updates the user password to new given
+func UpdatePassword(a AuthStruct, newPassword string) error {
+	newUser := MakeAuthStruct(a.Username, newPassword)
+	buf, _ := json.Marshal(newUser)
+	req, err := http.NewRequest("PUT", domain+"/user", bytes.NewBuffer(buf))
+	if err != nil {
+		return err
+	}
+	req.Header.Add("Content-Type", "application/json")
+	req.SetBasicAuth(a.Username, a.Password)
+
+	res, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	if res.StatusCode != 200 {
+		bodyBytes, _ := ioutil.ReadAll(res.Body)
+		defer res.Body.Close()
+		return errors.New("Rejected by server: " + string(bodyBytes))
+	}
+
+	return nil
+}
