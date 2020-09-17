@@ -44,8 +44,8 @@ func GetJobs() (*[]JobStruct, error) {
 }
 
 // AddJob creates a new job and returns its id
-func AddJob(a AuthStruct, j PostJobStruct) (string, error) {
-	buf, _ := json.Marshal(j)
+func AddJob(a AuthStruct, data PostJobStruct) (string, error) {
+	buf, _ := json.Marshal(data)
 	req, err := http.NewRequest("POST", domain+"/job", bytes.NewBuffer(buf))
 	if err != nil {
 		return "", err
@@ -142,6 +142,42 @@ func TakeJob(a AuthStruct, id string) error {
 
 	bodyBytes, err := ioutil.ReadAll(res.Body)
 	defer res.Body.Close()
+	if err != nil {
+		return err
+	}
+	if res.StatusCode != 200 {
+		return errors.New("Rejected by server: " + string(bodyBytes))
+	}
+
+	var r CheckedResourceResponse
+	err = json.Unmarshal(bodyBytes, &r)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ReturnJob tags a job as returned by user
+func ReturnJob(a AuthStruct, id string, data ReturnJobStruct) error {
+	buf, _ := json.Marshal(data)
+	req, err := http.NewRequest("PUT", domain+"/job/"+id+"/return", bytes.NewBuffer(buf))
+	if err != nil {
+		return err
+	}
+	req.SetBasicAuth(a.Username, a.Password)
+	req.Header.Set("Content-Type", "application/json")
+
+	res, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	bodyBytes, err := ioutil.ReadAll(res.Body)
+	defer res.Body.Close()
+	if err != nil {
+		return err
+	}
 	if res.StatusCode != 200 {
 		return errors.New("Rejected by server: " + string(bodyBytes))
 	}

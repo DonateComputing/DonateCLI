@@ -54,6 +54,20 @@ type PostJobStruct struct {
 	AllowMultipleRunners bool   `json:"allowMultipleRunners"`
 }
 
+// MakeReturnJobStruct creates return job data struct to pass to api
+func MakeReturnJobStruct(image string, isCompleted bool) *ReturnJobStruct {
+	return &ReturnJobStruct{
+		Image:       image,
+		IsCompleted: isCompleted,
+	}
+}
+
+// ReturnJobStruct is the struct passed to api to return a specific job
+type ReturnJobStruct struct {
+	Image       string `json:"image"`
+	IsCompleted bool   `json:"isCompleted"`
+}
+
 // CreatedResourceResponse is struct recieved when creating a resource
 type CreatedResourceResponse struct {
 	Message   string `json:"message"`
