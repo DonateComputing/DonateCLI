@@ -22,16 +22,40 @@ type JobStruct struct {
 	Runners              []string `json:"runner"`
 }
 
-// AuthStruct is the struct containing auth data to pass to api
-type AuthStruct struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-}
-
 // MakeAuthStruct creates authentication struct to pass to api
 func MakeAuthStruct(username string, password string) *AuthStruct {
 	return &AuthStruct{
 		Username: username,
 		Password: password,
 	}
+}
+
+// AuthStruct is the struct containing auth data to pass to api
+type AuthStruct struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
+// MakePostJobStruct creates job data struct to pass to api
+func MakePostJobStruct(title string, desc string, og string, allow bool) *PostJobStruct {
+	return &PostJobStruct{
+		Title:                title,
+		Description:          desc,
+		OriginalImage:        og,
+		AllowMultipleRunners: allow,
+	}
+}
+
+// PostJobStruct is the struct containing job data to pass to api
+type PostJobStruct struct {
+	Title                string `json:"title"`
+	Description          string `json:"description"`
+	OriginalImage        string `json:"originalImage"`
+	AllowMultipleRunners bool   `json:"allowMultipleRunners"`
+}
+
+// CreatedResourceResponse is struct recieved when creating a resource
+type CreatedResourceResponse struct {
+	Message   string `json:"message"`
+	CreatedID string `json:"createdId"`
 }
