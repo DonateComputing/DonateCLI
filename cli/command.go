@@ -1,7 +1,7 @@
 package cli
 
-// Runner interface for commands
-type Runner interface {
+// Command interface for commands
+type Command interface {
 	Init([]string) error
 	Run() error
 	Name() string

@@ -6,7 +6,7 @@ func Run(args []string) error {
 		return helpCommand()
 	}
 
-	cmds := []Runner{
+	cmds := []Command{
 		NewPsCommand(),
 		NewHubCommand(),
 		NewStartCommand(),
