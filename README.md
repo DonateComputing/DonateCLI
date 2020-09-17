@@ -29,6 +29,7 @@ Part of a larger Donate Project
 
 ### For Both
 
-* [ ] `login` opens interface to create login settings file
+* [ ] `login <username> <password>` creates login settings file
+  * [ ] `--register` flag will automatically register user on public hub
 * [x] `help` `--help` or `-h` will display help / usage message
   * [x] `` empty command will display help / usage message

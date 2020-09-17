@@ -8,14 +8,19 @@ import (
 
 // NewLoginCommand creates a default login command
 func NewLoginCommand() *LoginCommand {
-	return &LoginCommand{
+	cmd := &LoginCommand{
 		fs: flag.NewFlagSet("login", flag.ContinueOnError),
 	}
+	cmd.fs.BoolVar(&cmd.isRegister, "register", false, "flag to register user if not exists")
+
+	return cmd
 }
 
 // LoginCommand creates a login data file and ensures that the account exists on public hub
 type LoginCommand struct {
 	fs *flag.FlagSet
+
+	isRegister bool
 }
 
 // Name returns the name of the login command (login)
@@ -31,13 +36,13 @@ func (c *LoginCommand) Init(args []string) error {
 // Run executes login command
 func (c *LoginCommand) Run() error {
 	if c.fs.NArg() != 2 {
-		fmt.Println("Usage: login <username> <password>")
+		fmt.Println("Usage: login [optional: flags] <username> <password>")
 		return errors.New("Bad usage")
 	}
 
 	u := c.fs.Arg(0)
 	p := c.fs.Arg(1)
 
-	fmt.Printf("Running LOGIN %s %s\n", u, p)
+	fmt.Printf("Running LOGIN %s %s. Register is '%v'\n", u, p, c.isRegister)
 	return nil
 }
