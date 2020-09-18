@@ -29,7 +29,7 @@ Part of a larger Donate Project
 
 ### For Both
 
-* [ ] `login <username> <password>` creates login settings file
-  * [ ] `--register` flag will automatically register user on public hub
+* [x] `login <username> <password>` creates login settings file
+  * [x] `--register` flag will automatically register user on public hub
 * [x] `help` `--help` or `-h` will display help / usage message
   * [x] `` empty command will display help / usage message

@@ -1,9 +1,5 @@
 package cli
 
-import "os"
-
-var homeDir, _ = os.UserHomeDir()
-
 // Run applies arguments and flags to known list of commands
 func Run(args []string) error {
 	if len(args) < 1 {

@@ -4,6 +4,8 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+
+	"github.com/mfigurski80/DonateCLI/api"
 )
 
 // NewLoginCommand creates a default login command
@@ -40,9 +42,30 @@ func (c *LoginCommand) Run() error {
 		return errors.New("Bad usage")
 	}
 
-	u := c.fs.Arg(0)
-	p := c.fs.Arg(1)
+	// parse data
+	auth := api.MakeAuthStruct(c.fs.Arg(0), c.fs.Arg(1))
 
-	fmt.Printf("Running LOGIN %s %s. Register is '%v'\n", u, p, c.isRegister)
+	// verify login or register
+	if c.isRegister {
+		err := api.Register(*auth)
+		if err != nil {
+			fmt.Printf("Failed to register user '%v'\n", auth.Username)
+			return err
+		}
+	} else {
+		_, err := api.GetUser(*auth)
+		if err != nil {
+			fmt.Printf("Failed to login as user '%v'\n", auth.Username)
+			return err
+		}
+	}
+
+	// write to settings file
+	err := writeSettings(auth.Username, auth.Password)
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("Login as '%v' successful... settings file updated\n", auth.Username)
 	return nil
 }
