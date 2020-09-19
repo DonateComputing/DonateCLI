@@ -6,7 +6,7 @@ Part of a larger Donate Project
 
 ### For Runner
 
-* [ ] `ps` lists all jobs currently being run on client
+* [x] `ps` lists all jobs currently being run on client
   * [ ] `-a` include completed jobs on client
 * [ ] `hub` and `hub ps` list all jobs waiting for runner
   * [ ] `-a` include jobs being run or completed

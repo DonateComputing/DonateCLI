@@ -3,6 +3,8 @@ package cli
 import (
 	"flag"
 	"fmt"
+
+	"github.com/mfigurski80/DonateCLI/app"
 )
 
 // NewPsCommand creates a default ps command
@@ -34,6 +36,14 @@ func (c *PsCommand) Init(args []string) error {
 
 // Run executes ps command
 func (c *PsCommand) Run() error {
-	fmt.Printf("Running PS command! Flag -a is '%v'. Args are '%v'\n", c.isAll, c.fs.Args())
+	list, err := app.List(c.isAll)
+	if err != nil {
+		return err
+	}
+
+	for _, item := range list {
+		fmt.Printf("[%s] %s %s\n", item.ID[:5], item.Image, item.State)
+	}
+
 	return nil
 }
