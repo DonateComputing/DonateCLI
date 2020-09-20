@@ -8,8 +8,8 @@ Part of a larger Donate Project
 
 * [x] `ps` lists all jobs currently being run on client
   * [ ] `-a` include completed jobs on client
-* [ ] `hub` and `hub ps` list all jobs waiting for runner
-  * [ ] `-a` include jobs being run or completed
+* [x] `hub` and `hub ps` list all jobs waiting for runner
+  * [x] `-a` include jobs being run or completed
   * [ ] `-u` filter to only jobs belonging to or run by user
 * [ ] `start <id>` checks out and runs job with id
 * [ ] `stop` stops all jobs and returns them to hub

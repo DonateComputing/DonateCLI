@@ -20,7 +20,7 @@ func List(all bool) ([]types.Container, error) {
 		return nil, err
 	}
 
-	containers = filter(containers, func(c types.Container) bool {
+	containers = filterContainers(containers, func(c types.Container) bool {
 		if strings.HasSuffix(c.Image, "donate-api") {
 			return true
 		}

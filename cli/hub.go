@@ -3,6 +3,8 @@ package cli
 import (
 	"flag"
 	"fmt"
+
+	"github.com/mfigurski80/DonateCLI/app"
 )
 
 // NewHubCommand creates a default hub command
@@ -43,6 +45,13 @@ func (c *HubCommand) Run() error {
 		return recmd.Run()
 	}
 
-	fmt.Printf("Running HUB command! Flag -a is '%v', flag -u is '%v'. Args are '%v'\n", c.isAll, c.isUser, c.fs.Args())
+	jobs, err := app.ListHub(c.isAll, c.isUser)
+	if err != nil {
+		return err
+	}
+	for _, j := range jobs {
+		fmt.Printf("[%s] %s/%s : %s\n", j.ID[:5], j.Author, j.Title, j.Description)
+	}
+
 	return nil
 }
