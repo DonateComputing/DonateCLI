@@ -45,7 +45,12 @@ func (c *HubCommand) Run() error {
 		return recmd.Run()
 	}
 
-	jobs, err := app.ListHub(c.isAll, c.isUser)
+	auth, err := readAuth()
+	if err != nil {
+		return err
+	}
+
+	jobs, err := app.ListHub(*auth, c.isAll, c.isUser)
 	if err != nil {
 		return err
 	}
