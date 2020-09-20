@@ -61,7 +61,7 @@ func (c *LoginCommand) Run() error {
 	}
 
 	// write to settings file
-	err := writeSettings(auth.Username, auth.Password)
+	err := writeAuth(*auth)
 	if err != nil {
 		return err
 	}
