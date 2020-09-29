@@ -1,5 +1,7 @@
 # Author + Runner CLI
 
+![Go Tests](https://github.com/DonateComputing/DonateCLI/workflows/Go%20Tests/badge.svg?branch=master)
+
 Part of a larger Donate Project
 
 ## Features
