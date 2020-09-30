@@ -55,7 +55,7 @@ func (c *HubCommand) Run() error {
 		return err
 	}
 	for _, j := range jobs {
-		fmt.Printf("[%s] %s/%s : %s\n", j.ID[:5], j.Author, j.Title, j.Description)
+		fmt.Printf("[%s] %s/%s : %s\n", j.Title[:5], j.Author, j.Title, j.Description)
 	}
 
 	return nil

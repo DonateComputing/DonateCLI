@@ -43,17 +43,17 @@ func (c *LoginCommand) Run() error {
 	}
 
 	// parse data
-	auth := api.MakeAuthStruct(c.fs.Arg(0), c.fs.Arg(1))
+	auth := api.AuthStruct{Username: c.fs.Arg(0), Password: c.fs.Arg(1)}
 
 	// verify login or register
 	if c.isRegister {
-		err := api.Register(*auth)
+		err := api.RegisterUser(auth)
 		if err != nil {
 			fmt.Printf("Failed to register user '%v'\n", auth.Username)
 			return err
 		}
 	} else {
-		_, err := api.GetUser(*auth)
+		_, err := api.GetUser(auth)
 		if err != nil {
 			fmt.Printf("Failed to login as user '%v'\n", auth.Username)
 			return err
@@ -61,7 +61,7 @@ func (c *LoginCommand) Run() error {
 	}
 
 	// write to settings file
-	err := writeAuth(*auth)
+	err := writeAuth(auth)
 	if err != nil {
 		return err
 	}

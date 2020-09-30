@@ -9,9 +9,9 @@ import (
 )
 
 // Start checks out given job id and runs in on local machine
-func Start(id string, auth api.AuthStruct) error {
+func Start(title string, auth api.AuthStruct) error {
 
-	job, err := api.GetJob(id)
+	job, err := api.GetJob(api.JobRefStruct{Title: title, User: auth.Username})
 	if err != nil {
 		return err
 	}
