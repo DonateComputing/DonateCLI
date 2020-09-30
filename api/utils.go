@@ -14,14 +14,14 @@ func doRequest(method string, url string, data interface{}, auth AuthStruct) (*h
 	if data != nil {
 		reqBytes, err := json.Marshal(data)
 		if err != nil {
-			return &http.Response{}, fmt.Errorf("Error marshaling data %s: %v", string(reqBytes), err)
+			return &http.Response{}, fmt.Errorf("failed to marshal data %s: %v", string(reqBytes), err)
 		}
 		bytesBuffer = *bytes.NewBuffer(reqBytes)
 	}
 	// set up request
 	req, err := http.NewRequest(method, url, &bytesBuffer)
 	if err != nil {
-		return &http.Response{}, fmt.Errorf("Error forming request %v", err)
+		return &http.Response{}, fmt.Errorf("failed to form request %v", err)
 	}
 	if data != nil {
 		req.Header.Add("Content-Type", "application/json")

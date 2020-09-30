@@ -17,6 +17,17 @@ func TestPostJob(t *testing.T) {
 	}
 	err := PostJob(job, auth)
 	if err != nil {
-		t.Fatalf("PostJob() error '%v'", err)
+		t.Fatalf("PostJob('%v') error '%v'", job, err)
+	}
+}
+
+func TestGetJob(t *testing.T) {
+	ref := JobRefStruct{auth.Username, "TESTJOB"}
+	job, err := GetJob(ref)
+	if err != nil {
+		t.Fatalf("GetJob('%v') error '%v'", ref, err)
+	}
+	if job.Title != ref.Title || job.Author != ref.User {
+		t.Fatalf("GetJob('%v') returned bad job '%v'", ref, job)
 	}
 }

@@ -12,12 +12,6 @@ type UserStruct struct {
 	Running  []JobRefStruct `json:"running"`
 }
 
-// JobRefStruct is struct returned by api as absolute reference to specific job
-type JobRefStruct struct {
-	User  string `json:"user"`
-	Title string `json:"title"`
-}
-
 // GetUser sends a request for authenticated user's data
 func GetUser(auth AuthStruct) (*UserStruct, error) {
 	// do request
