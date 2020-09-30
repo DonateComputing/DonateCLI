@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func doRequest(method string, url string, data interface{}) (*http.Response, error) {
+func doRequest(method string, url string, data interface{}, auth AuthStruct) (*http.Response, error) {
 	// marshal data (if exists)
 	var bytesBuffer *bytes.Buffer
 	if data != nil {
@@ -25,6 +25,9 @@ func doRequest(method string, url string, data interface{}) (*http.Response, err
 	}
 	if data != nil {
 		req.Header.Add("Content-Type", "application/json")
+	}
+	if auth.Username != "" {
+		req.SetBasicAuth(auth.Username, auth.Password)
 	}
 	// do request
 	return client.Do(req)

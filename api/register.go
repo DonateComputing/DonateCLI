@@ -11,7 +11,7 @@ type AuthStruct struct {
 // PostRegister sends a register request to api with given data
 func PostRegister(data *AuthStruct) (ResponseStruct, error) {
 	// set up + do request
-	res, err := doRequest("POST", domain+"/register", &data)
+	res, err := doRequest("POST", domain+"/register", &data, AuthStruct{})
 	if err != nil {
 		return ResponseStruct{}, err
 	}
@@ -19,6 +19,9 @@ func PostRegister(data *AuthStruct) (ResponseStruct, error) {
 	// parse body
 	var r ResponseStruct
 	err = parseResponseBody(res, &r)
+	if err != nil {
+		return r, err
+	}
 
 	// check status
 	if res.StatusCode != 200 || !r.Success {

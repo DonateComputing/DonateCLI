@@ -1,5 +1,7 @@
 package api
 
+import "fmt"
+
 // UserStruct is struct returned by api when querying user data
 type UserStruct struct {
 	Username string         `json:"username"`
@@ -15,7 +17,24 @@ type JobRefStruct struct {
 }
 
 // GetUser sends a request for the user with given username
-func GetUser(username string, auth AuthStruct) (*UserStruct, error) {
+func GetUser(username string, auth AuthStruct) (UserStruct, error) {
+	// do request
+	res, err := doRequest("GET", fmt.Sprintf("%s/%s", domain, username), nil, auth)
+	if err != nil {
+		return UserStruct{}, err
+	}
 
-	return &UserStruct{}, nil
+	// parse body
+	var u UserStruct
+	err = parseResponseBody(res, &u)
+	if err != nil {
+		var r ResponseStruct
+		err = parseResponseBody(res, &r)
+		if err != nil {
+			return u, err
+		}
+		return u, makeErrorFromResponse(res, r)
+	}
+
+	return u, nil
 }
