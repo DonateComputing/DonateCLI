@@ -33,6 +33,23 @@ func TestGetJob(t *testing.T) {
 	}
 }
 
+func TestTakeJob(t *testing.T) {
+	ref := JobRefStruct{auth.Username, job.Title}
+	err := TakeJob(ref, auth)
+	if err != nil {
+		t.Fatalf("TakeJob('%v') error '%v'", ref, err)
+	}
+}
+
+func TestReturnJob(t *testing.T) {
+	ref := JobRefStruct{auth.Username, job.Title}
+	ret := JobReturnStruct{"RETURNIMAGE"}
+	err := ReturnJob(ref, ret, auth)
+	if err != nil {
+		t.Fatalf("ReturnJob('%v', '%v', '%v') error '%v'", ref, ret, auth, err)
+	}
+}
+
 func TestDeleteJob(t *testing.T) {
 	ref := JobRefStruct{auth.Username, job.Title}
 	err := DeleteJob(ref, auth)

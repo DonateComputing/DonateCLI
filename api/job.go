@@ -117,3 +117,48 @@ func DeleteJob(ref JobRefStruct, auth AuthStruct) error {
 
 	return nil
 }
+
+// TakeJob sends request to mark specific given job as being run
+func TakeJob(ref JobRefStruct, auth AuthStruct) error {
+	// do request
+	res, err := doRequest("PUT", urlUserJob(ref.User, ref.Title)+"/take", nil, auth)
+	if err != nil {
+		return err
+	}
+
+	// read/check response
+	r, err := parseUpdateResponseBody(res)
+	if err != nil {
+		return err
+	}
+	if res.StatusCode != 200 || !r.Success {
+		return errors.New(r.Message)
+	}
+
+	return nil
+}
+
+// JobReturnStruct is struct given to api when returning a job
+type JobReturnStruct struct {
+	Image string `json:"image"`
+}
+
+// ReturnJob sends request to mark specific given job as no longer being run
+func ReturnJob(ref JobRefStruct, data JobReturnStruct, auth AuthStruct) error {
+	// do request
+	res, err := doRequest("PUT", urlUserJob(ref.User, ref.Title)+"/return", data, auth)
+	if err != nil {
+		return err
+	}
+
+	// read/check response
+	r, err := parseUpdateResponseBody(res)
+	if err != nil {
+		return err
+	}
+	if res.StatusCode != 200 || !r.Success {
+		return errors.New(r.Message)
+	}
+
+	return nil
+}
