@@ -2,7 +2,6 @@ package api
 
 import (
 	"errors"
-	"fmt"
 )
 
 // UserStruct is struct returned by api when querying user data
@@ -22,18 +21,18 @@ type JobRefStruct struct {
 // GetUser sends a request for authenticated user's data
 func GetUser(auth AuthStruct) (*UserStruct, error) {
 	// do request
-	res, err := doRequest("GET", fmt.Sprintf("%s/%s", domain, auth.Username), nil, auth)
+	res, err := doRequest("GET", urlUser(auth.Username), nil, auth)
 	if err != nil {
-		return &UserStruct{}, err
+		return nil, err
 	}
 
 	// check response
 	if res.StatusCode != 200 {
 		r, err := parseUpdateResponseBody(res)
 		if err != nil {
-			return &UserStruct{}, err
+			return nil, err
 		}
-		return &UserStruct{}, errors.New(r.Message)
+		return nil, errors.New(r.Message)
 	}
 
 	// return body
@@ -49,7 +48,7 @@ func UpdatePassword(newPassword string, auth AuthStruct) error {
 		Password: newPassword,
 	}
 	// do request
-	res, err := doRequest("PUT", fmt.Sprintf("%s/%s", domain, auth.Username), data, auth)
+	res, err := doRequest("PUT", urlUser(auth.Username), data, auth)
 	if err != nil {
 		return err
 	}
@@ -69,7 +68,7 @@ func UpdatePassword(newPassword string, auth AuthStruct) error {
 // DeleteUser sends request to delete authenticated user
 func DeleteUser(auth AuthStruct) error {
 	// do request
-	res, err := doRequest("DELETE", fmt.Sprintf("%s/%s", domain, auth.Username), nil, auth)
+	res, err := doRequest("DELETE", urlUser(auth.Username), nil, auth)
 	if err != nil {
 		return err
 	}

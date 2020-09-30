@@ -52,3 +52,11 @@ func parseResponseBody(response *http.Response, data interface{}) error {
 
 	return nil
 }
+
+func urlUser(user string) string {
+	return fmt.Sprintf("%s/%s", domain, user)
+}
+
+func urlUserJob(user string, job string) string {
+	return fmt.Sprintf("%s/%s/%s", domain, user, job)
+}
