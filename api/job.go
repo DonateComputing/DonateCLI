@@ -97,3 +97,23 @@ func GetJob(ref JobRefStruct) (*JobStruct, error) {
 	err = parseResponseBody(res, &job)
 	return &job, err
 }
+
+// DeleteJob sends request to delete specific job of given ref
+func DeleteJob(ref JobRefStruct, auth AuthStruct) error {
+	// do request
+	res, err := doRequest("DELETE", urlUserJob(ref.User, ref.Title), nil, auth)
+	if err != nil {
+		return err
+	}
+
+	// read/check response
+	r, err := parseUpdateResponseBody(res)
+	if err != nil {
+		return err
+	}
+	if res.StatusCode != 200 || !r.Success {
+		return errors.New(r.Message)
+	}
+
+	return nil
+}
