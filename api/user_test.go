@@ -17,7 +17,7 @@ func TestGetUser(t *testing.T) {
 func TestUpdatePassword(t *testing.T) {
 	err := UpdatePassword("TEMP", auth)
 	if err != nil {
-		t.Fatalf("UpdatePassword() error '%v'", err)
+		t.Fatalf("UpdatePassword('TEMP') error '%v'", err)
 	}
 
 	newAuth := AuthStruct{
@@ -26,18 +26,18 @@ func TestUpdatePassword(t *testing.T) {
 	}
 	err = UpdatePassword(auth.Password, newAuth)
 	if err != nil {
-		t.Fatalf("UpdatePassword() secondary error '%v'", err)
+		t.Fatalf("UpdatePassword('TEMP') secondary error '%v'", err)
 	}
 }
 
 func TestDeleteUser(t *testing.T) {
 	err := DeleteUser(auth)
 	if err != nil {
-		t.Fatalf("DeleteUser() error '%v'", err)
+		t.Fatalf("DeleteUser('%v') error '%v'", auth, err)
 	}
 
 	err = RegisterUser(auth)
 	if err != nil {
-		t.Fatalf("DeleteUser() cleanup failed: '%v'", err)
+		t.Fatalf("DeleteUser('%v') cleanup failed: '%v'", auth, err)
 	}
 }

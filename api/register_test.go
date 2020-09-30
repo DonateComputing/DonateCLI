@@ -15,6 +15,6 @@ func TestRegisterUser(t *testing.T) {
 		if err.Error() == "Error: user miko already exists" {
 			return
 		}
-		t.Fatalf("PostRegister() error '%s'", err)
+		t.Fatalf("PostRegister('%v') error '%s'", auth, err)
 	}
 }
