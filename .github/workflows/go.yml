@@ -30,5 +30,8 @@ jobs:
             dep ensure
         fi
 
-    - name: Test
+    - name: Run API to test against
+      run: docker run -d -p 8080:8080 -e PASSWORD_SALT=salt mfigurski80/donate-api
+
+    - name: Run Tests
       run: go test -v ./...
