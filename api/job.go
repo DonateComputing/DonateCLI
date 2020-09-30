@@ -19,8 +19,8 @@ type JobRefStruct struct {
 	Title string `json:"title"`
 }
 
-// PostJobStruct is struct sent to api when creating a new job
-type PostJobStruct struct {
+// JobPostStruct is struct sent to api when creating a new job
+type JobPostStruct struct {
 	Title       string `json:"title"`
 	Description string `json:"description"`
 	Image       string `json:"image"`
@@ -56,7 +56,7 @@ func GetJobs() (*JobListStruct, error) {
 }
 
 // PostJob send request to create a job from given data
-func PostJob(data PostJobStruct, auth AuthStruct) error {
+func PostJob(data JobPostStruct, auth AuthStruct) error {
 	// do request
 	res, err := doRequest("POST", domain+"/job", data, auth)
 	if err != nil {

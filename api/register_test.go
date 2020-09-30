@@ -10,6 +10,7 @@ var auth = AuthStruct{
 }
 
 func TestRegisterUser(t *testing.T) {
+	ensureUserDestroyed(auth)
 	err := RegisterUser(auth)
 	if err != nil {
 		if err.Error() == "Error: user miko already exists" {

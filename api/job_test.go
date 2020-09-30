@@ -2,7 +2,7 @@ package api
 
 import "testing"
 
-var job = PostJobStruct{
+var job = JobPostStruct{
 	Title:       "TESTJOB",
 	Description: "TESTDESCRIPTION",
 	Image:       "TESTIMAGE",
@@ -16,6 +16,8 @@ func TestGetJobs(t *testing.T) {
 }
 
 func TestPostJob(t *testing.T) {
+	ensureUserExists(auth)
+	ensureJobDestroyed(job, auth)
 	err := PostJob(job, auth)
 	if err != nil {
 		t.Fatalf("PostJob('%v') error '%v'", job, err)
@@ -34,6 +36,7 @@ func TestGetJob(t *testing.T) {
 }
 
 func TestTakeJob(t *testing.T) {
+	ensureUserExists(auth)
 	ref := JobRefStruct{auth.Username, job.Title}
 	err := TakeJob(ref, auth)
 	if err != nil {
@@ -42,6 +45,7 @@ func TestTakeJob(t *testing.T) {
 }
 
 func TestReturnJob(t *testing.T) {
+	ensureUserExists(auth)
 	ref := JobRefStruct{auth.Username, job.Title}
 	ret := JobReturnStruct{"RETURNIMAGE"}
 	err := ReturnJob(ref, ret, auth)
@@ -51,6 +55,7 @@ func TestReturnJob(t *testing.T) {
 }
 
 func TestDeleteJob(t *testing.T) {
+	ensureUserExists(auth)
 	ref := JobRefStruct{auth.Username, job.Title}
 	err := DeleteJob(ref, auth)
 	if err != nil {

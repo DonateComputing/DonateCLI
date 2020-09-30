@@ -5,6 +5,7 @@ import (
 )
 
 func TestGetUser(t *testing.T) {
+	ensureUserExists(auth)
 	u, err := GetUser(auth)
 	if err != nil {
 		t.Fatalf("GetUser() error '%v'", err)
@@ -15,6 +16,7 @@ func TestGetUser(t *testing.T) {
 }
 
 func TestUpdatePassword(t *testing.T) {
+	ensureUserExists(auth)
 	err := UpdatePassword("TEMP", auth)
 	if err != nil {
 		t.Fatalf("UpdatePassword('TEMP') error '%v'", err)
@@ -31,6 +33,7 @@ func TestUpdatePassword(t *testing.T) {
 }
 
 func TestDeleteUser(t *testing.T) {
+	ensureUserExists(auth)
 	err := DeleteUser(auth)
 	if err != nil {
 		t.Fatalf("DeleteUser('%v') error '%v'", auth, err)
