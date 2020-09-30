@@ -35,4 +35,9 @@ func TestDeleteUser(t *testing.T) {
 	if err != nil {
 		t.Fatalf("DeleteUser() error '%v'", err)
 	}
+
+	err = RegisterUser(auth)
+	if err != nil {
+		t.Fatalf("DeleteUser() cleanup failed: '%v'", err)
+	}
 }

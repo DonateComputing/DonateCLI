@@ -19,6 +19,13 @@ type JobMapStruct map[string]JobStruct
 // JobListStruct is struct returned by api when querying for free jobs
 type JobListStruct []JobStruct
 
+// PostJobStruct is struct sent to api when creating a new job
+type PostJobStruct struct {
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	Image       string `json:"image"`
+}
+
 // GetJobs sends query for free jobs
 func GetJobs() (*JobListStruct, error) {
 	// do request
@@ -40,4 +47,24 @@ func GetJobs() (*JobListStruct, error) {
 	var j JobListStruct
 	err = parseResponseBody(res, &j)
 	return &j, err
+}
+
+// PostJob send request to create a job from given data
+func PostJob(data PostJobStruct, auth AuthStruct) error {
+	// do request
+	res, err := doRequest("POST", domain+"/job", data, auth)
+	if err != nil {
+		return err
+	}
+
+	// read response
+	r, err := parseUpdateResponseBody(res)
+	if err != nil {
+		return err
+	}
+	if res.StatusCode != 200 || !r.Success {
+		return errors.New(r.Message)
+	}
+
+	return nil
 }

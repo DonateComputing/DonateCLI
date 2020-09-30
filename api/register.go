@@ -8,8 +8,8 @@ type AuthStruct struct {
 	Password string `json:"password"`
 }
 
-// PostRegister sends a register request to api with given data
-func PostRegister(data AuthStruct) error {
+// RegisterUser sends a register request to api with given data
+func RegisterUser(data AuthStruct) error {
 	// set up + do request
 	res, err := doRequest("POST", domain+"/register", &data, AuthStruct{})
 	if err != nil {
@@ -23,7 +23,7 @@ func PostRegister(data AuthStruct) error {
 	}
 
 	// respond, and check status
-	if res.StatusCode != 200 {
+	if res.StatusCode != 200 || !r.Success {
 		return errors.New(r.Message)
 	}
 	return nil

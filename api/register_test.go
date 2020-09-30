@@ -9,8 +9,8 @@ var auth = AuthStruct{
 	Password: "pass",
 }
 
-func TestPostRegister(t *testing.T) {
-	err := PostRegister(auth)
+func TestRegisterUser(t *testing.T) {
+	err := RegisterUser(auth)
 	if err != nil {
 		if err.Error() == "Error: user miko already exists" {
 			return

@@ -58,7 +58,7 @@ func UpdatePassword(newPassword string, auth AuthStruct) error {
 	if err != nil {
 		return err
 	}
-	if res.StatusCode != 200 {
+	if res.StatusCode != 200 || !r.Success {
 		return errors.New(r.Message)
 	}
 
@@ -78,7 +78,7 @@ func DeleteUser(auth AuthStruct) error {
 	if err != nil {
 		return err
 	}
-	if res.StatusCode != 200 {
+	if res.StatusCode != 200 || !r.Success {
 		return errors.New(r.Message)
 	}
 
