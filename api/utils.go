@@ -10,18 +10,18 @@ import (
 
 func doRequest(method string, url string, data interface{}, auth AuthStruct) (*http.Response, error) {
 	// marshal data (if exists)
-	var bytesBuffer *bytes.Buffer
+	var bytesBuffer bytes.Buffer
 	if data != nil {
 		reqBytes, err := json.Marshal(data)
 		if err != nil {
-			return &http.Response{}, err
+			return &http.Response{}, fmt.Errorf("Error marshaling data %s: %v", string(reqBytes), err)
 		}
-		bytesBuffer = bytes.NewBuffer(reqBytes)
+		bytesBuffer = *bytes.NewBuffer(reqBytes)
 	}
 	// set up request
-	req, err := http.NewRequest(method, url, bytesBuffer)
+	req, err := http.NewRequest(method, url, &bytesBuffer)
 	if err != nil {
-		return &http.Response{}, err
+		return &http.Response{}, fmt.Errorf("Error forming request %v", err)
 	}
 	if data != nil {
 		req.Header.Add("Content-Type", "application/json")

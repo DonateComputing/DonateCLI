@@ -1,6 +1,9 @@
 package api
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 // UserStruct is struct returned by api when querying user data
 type UserStruct struct {
@@ -16,25 +19,69 @@ type JobRefStruct struct {
 	Title string `json:"title"`
 }
 
-// GetUser sends a request for the user with given username
-func GetUser(username string, auth AuthStruct) (UserStruct, error) {
+// GetUser sends a request for authenticated user's data
+func GetUser(auth AuthStruct) (*UserStruct, error) {
 	// do request
-	res, err := doRequest("GET", fmt.Sprintf("%s/%s", domain, username), nil, auth)
+	res, err := doRequest("GET", fmt.Sprintf("%s/%s", domain, auth.Username), nil, auth)
 	if err != nil {
-		return UserStruct{}, err
+		return &UserStruct{}, err
 	}
 
-	// parse body
+	// check response
+	if res.StatusCode != 200 {
+		r, err := parseUpdateResponseBody(res)
+		if err != nil {
+			return &UserStruct{}, err
+		}
+		return &UserStruct{}, errors.New(r.Message)
+	}
+
+	// return body
 	var u UserStruct
 	err = parseResponseBody(res, &u)
+	return &u, err
+}
+
+// UpdatePassword sends request to update authenticated user's password
+func UpdatePassword(newPassword string, auth AuthStruct) error {
+	data := AuthStruct{
+		Username: auth.Username,
+		Password: newPassword,
+	}
+	// do request
+	res, err := doRequest("PUT", fmt.Sprintf("%s/%s", domain, auth.Username), data, auth)
 	if err != nil {
-		var r ResponseStruct
-		err = parseResponseBody(res, &r)
-		if err != nil {
-			return u, err
-		}
-		return u, makeErrorFromResponse(res, r)
+		return err
 	}
 
-	return u, nil
+	// read/check response
+	r, err := parseUpdateResponseBody(res)
+	if err != nil {
+		return err
+	}
+	if res.StatusCode != 200 {
+		return errors.New(r.Message)
+	}
+
+	return nil
+}
+
+// DeleteUser sends request to delete authenticated user
+func DeleteUser(auth AuthStruct) error {
+	// do request
+	res, err := doRequest("DELETE", fmt.Sprintf("%s/%s", domain, auth.Username), nil, auth)
+	if err != nil {
+		return err
+	}
+
+	// read/check response
+	r, err := parseUpdateResponseBody(res)
+	if err != nil {
+		return err
+	}
+	if res.StatusCode != 200 {
+		return errors.New(r.Message)
+	}
+
+	return nil
 }

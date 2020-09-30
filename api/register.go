@@ -1,6 +1,6 @@
 package api
 
-import "fmt"
+import "errors"
 
 // AuthStruct is struct required by api to register a user and to auth existing user
 type AuthStruct struct {
@@ -9,24 +9,22 @@ type AuthStruct struct {
 }
 
 // PostRegister sends a register request to api with given data
-func PostRegister(data *AuthStruct) (ResponseStruct, error) {
+func PostRegister(data AuthStruct) error {
 	// set up + do request
 	res, err := doRequest("POST", domain+"/register", &data, AuthStruct{})
 	if err != nil {
-		return ResponseStruct{}, err
+		return err
 	}
 
 	// parse body
-	var r ResponseStruct
-	err = parseResponseBody(res, &r)
+	r, err := parseUpdateResponseBody(res)
 	if err != nil {
-		return r, err
+		return err
 	}
 
-	// check status
-	if res.StatusCode != 200 || !r.Success {
-		return r, fmt.Errorf("`/register` rejected (%d), '%s'", res.StatusCode, r.Message)
+	// respond, and check status
+	if res.StatusCode != 200 {
+		return errors.New(r.Message)
 	}
-
-	return r, nil
+	return nil
 }
