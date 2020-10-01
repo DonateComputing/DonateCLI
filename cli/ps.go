@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"errors"
 	"flag"
 	"fmt"
 
@@ -38,7 +39,7 @@ func (c *PsCommand) Init(args []string) error {
 func (c *PsCommand) Run() error {
 	auth, err := readAuth()
 	if err != nil {
-		fmt.Printf("Could not find auth file. Please run `login` command")
+		return errors.New("Could not find auth file. Please run `login` command")
 	}
 	list, err := app.List(*auth, c.isAll)
 	if err != nil {

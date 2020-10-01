@@ -9,20 +9,29 @@ import (
 )
 
 // CreateNewContainer creates and runs a container based on given local image
-func CreateNewContainer(image string) (string, error) {
+func CreateNewContainer(image string, name string) (string, error) {
 	cli, err := client.NewEnvClient()
 	if err != nil {
 		return "", err
 	}
+
+	var gigabyte int64 = 1_073_741_824
 
 	cont, err := cli.ContainerCreate(
 		context.Background(),
 		&container.Config{
 			Image: image,
 		},
-		&container.HostConfig{},
+		&container.HostConfig{
+			Privileged: false,
+			Isolation:  "hyperv",
+			Resources: container.Resources{
+				CPUShares: 4,
+				Memory:    gigabyte * 5,
+			},
+		},
 		nil,
-		"",
+		name,
 	)
 	if err != nil {
 		return "", err

@@ -4,6 +4,8 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+
+	"github.com/mfigurski80/DonateCLI/app"
 )
 
 // NewStartCommand creates a default start command
@@ -30,10 +32,19 @@ func (c *StartCommand) Init(args []string) error {
 
 // Run executes the start command
 func (c *StartCommand) Run() error {
-	if c.fs.NArg() < 1 {
-		return errors.New("ID of public runnable job is required")
+	if c.fs.NArg() < 2 {
+		return errors.New("User and Title of public runnable job is required")
+	}
+	auth, err := readAuth()
+	if err != nil {
+		return errors.New("Could not find auth file. Please run `login` command")
 	}
 
-	fmt.Printf("Running START '%v' command\n", c.fs.Arg(0))
+	username := c.fs.Arg(0)
+	title := c.fs.Arg(0)
+	id, err := app.Start(username, title, *auth)
+
+	fmt.Printf("Started '%s/%s' as [%s]", username, title, id)
+
 	return nil
 }

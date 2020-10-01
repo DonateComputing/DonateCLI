@@ -13,7 +13,7 @@ Part of a larger Donate Project
 * [x] `hub` and `hub ps` list all jobs waiting for runner
   * [x] `-a` include jobs being run or completed
   * [x] `-u` filter to only jobs belonging to or run by user
-* [ ] `start <id>` checks out and runs job with id
+* [x] `start <id>` checks out and runs job with id
 * [ ] `stop` stops all jobs and returns them to hub
   * [ ] `stop <id>` stops only job with given id
 * [ ] `pause` pauses all jobs
