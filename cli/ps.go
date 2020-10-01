@@ -36,13 +36,21 @@ func (c *PsCommand) Init(args []string) error {
 
 // Run executes ps command
 func (c *PsCommand) Run() error {
-	list, err := app.List(c.isAll)
+	auth, err := readAuth()
+	if err != nil {
+		fmt.Printf("Could not find auth file. Please run `login` command")
+	}
+	list, err := app.List(*auth, c.isAll)
 	if err != nil {
 		return err
 	}
 
-	for _, item := range list {
-		fmt.Printf("[%s] %s %s\n", item.ID[:5], item.Image, item.State)
+	if len(list) <= 0 {
+		fmt.Println("No jobs are currently running")
+	} else {
+		for _, item := range list {
+			fmt.Printf("[%s] %s %s\n", item.ID[:5], item.Image, item.State)
+		}
 	}
 
 	return nil

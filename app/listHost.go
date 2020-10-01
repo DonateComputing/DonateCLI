@@ -1,28 +1,28 @@
 package app
 
 import (
-	"context"
-	"strings"
-
 	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/client"
+	"github.com/mfigurski80/DonateCLI/api"
+	"github.com/mfigurski80/DonateCLI/docker"
 )
 
 // List returns list of all containers
-func List(all bool) ([]types.Container, error) {
-	cli, err := client.NewEnvClient()
+func List(auth api.AuthStruct, all bool) ([]types.Container, error) {
+	u, err := api.GetUser(auth)
 	if err != nil {
-		return nil, err
+		return []types.Container{}, nil
 	}
 
-	containers, err := cli.ContainerList(context.Background(), types.ContainerListOptions{All: all})
+	containers, err := docker.ListContainers(all)
 	if err != nil {
-		return nil, err
+		return containers, nil
 	}
 
 	containers = filterContainers(containers, func(c types.Container) bool {
-		if strings.HasSuffix(c.Image, "donate-api") {
-			return true
+		for _, j := range u.Running {
+			if c.Names[0] == j.Title {
+				return true
+			}
 		}
 		return false
 	})

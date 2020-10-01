@@ -9,7 +9,7 @@ Part of a larger Donate Project
 ### For Runner
 
 * [x] `ps` lists all jobs currently being run on client
-  * [ ] `-a` include completed jobs on client
+  * [x] `-a` include completed jobs on client
 * [x] `hub` and `hub ps` list all jobs waiting for runner
   * [x] `-a` include jobs being run or completed
   * [x] `-u` filter to only jobs belonging to or run by user

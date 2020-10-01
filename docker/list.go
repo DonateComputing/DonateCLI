@@ -8,13 +8,13 @@ import (
 )
 
 // ListContainers lists all running containers
-func ListContainers() ([]types.Container, error) {
+func ListContainers(all bool) ([]types.Container, error) {
 	cli, err := client.NewEnvClient()
 	if err != nil {
 		panic(err)
 	}
 
-	containers, err := cli.ContainerList(context.Background(), types.ContainerListOptions{})
+	containers, err := cli.ContainerList(context.Background(), types.ContainerListOptions{All: all})
 	return containers, nil
 
 	// if len(containers) == 0 {

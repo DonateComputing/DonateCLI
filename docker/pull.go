@@ -14,7 +14,7 @@ func PullImage(image string) error {
 		return err
 	}
 
-	closer, err := cli.ImagePull(context.Background(), "docker.io/"+image, types.ImagePullOptions{})
+	closer, err := cli.ImagePull(context.Background(), image, types.ImagePullOptions{})
 	defer closer.Close()
 
 	return err
