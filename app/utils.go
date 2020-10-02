@@ -24,3 +24,14 @@ func filterJobs(list []api.JobStruct, cond func(api.JobStruct) bool) []api.JobSt
 	}
 	return r
 }
+
+func findImageIndex(list []types.ImageSummary, label string) (int, bool) {
+	for i, img := range list {
+		for _, l := range img.Labels {
+			if l == label {
+				return i, true
+			}
+		}
+	}
+	return -1, false
+}

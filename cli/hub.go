@@ -57,6 +57,9 @@ func (c *HubCommand) Run() error {
 	for _, j := range jobs {
 		fmt.Printf("[%s] %s/%s : %s\n", j.Title[:5], j.Author, j.Title, j.Description)
 	}
+	if len(jobs) <= 0 {
+		fmt.Println("Not jobs are currently posted")
+	}
 
 	return nil
 }

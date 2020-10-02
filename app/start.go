@@ -13,11 +13,22 @@ func Start(user string, title string, auth api.AuthStruct) (string, error) {
 		return "", err
 	}
 
-	// pull n run
-	err = docker.PullImage("docker.io/" + job.OriginalImage)
+	// check if exists
+	images, err := docker.ListImages()
 	if err != nil {
-		return "", err
+		return "", nil
 	}
+	_, exists := findImageIndex(images, job.OriginalImage)
+
+	// pull
+	if !exists {
+		err = docker.PullImage("docker.io/" + job.OriginalImage)
+		if err != nil {
+			return "", err
+		}
+	}
+
+	// run
 	id, err := docker.CreateNewContainer(job.OriginalImage, job.Title)
 	if err != nil {
 		return id, err
