@@ -4,6 +4,8 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+
+	"github.com/mfigurski80/DonateCLI/app"
 )
 
 // NewAddCommand creates a default add command
@@ -11,16 +13,12 @@ func NewAddCommand() *AddCommand {
 	cmd := &AddCommand{
 		fs: flag.NewFlagSet("add", flag.ContinueOnError),
 	}
-	cmd.fs.BoolVar(&cmd.allowMultiple, "allow-multiple", false, "flag to allow multiple runners of job")
-
 	return cmd
 }
 
 // AddCommand creates and uploads job to public hub
 type AddCommand struct {
 	fs *flag.FlagSet
-
-	allowMultiple bool
 }
 
 // Name returns the name of the add command (add)
@@ -35,14 +33,24 @@ func (c *AddCommand) Init(args []string) error {
 
 // Run executes the add command
 func (c *AddCommand) Run() error {
+	auth, err := readAuth()
+	if err != nil {
+		return err
+	}
+	args := c.fs.Args()
 
 	switch c.fs.NArg() {
 	case 3:
-		fmt.Printf("Running the ADD %v command! Flag --allow-multiple is %v\n", c.fs.Args(), c.allowMultiple)
+		err := app.Add(args[0], args[1], args[2], *auth)
+		if err != nil {
+			return err
+		}
 	case 0:
-		fmt.Printf("Running the ADD command! Flag --allow-multiple is '%v'. Args are %v\n", c.allowMultiple, c.fs.Args())
+		// TODO: interface
 	default:
-		return errors.New("Incorrect number of arguments")
+		return errors.New("Usage: add <title> <description> <image>")
 	}
+
+	fmt.Printf("Successfully added job '%s'\n", args[0])
 	return nil
 }

@@ -25,8 +25,7 @@ Part of a larger Donate Project
 ### For Author
 
 * [ ] `add` opens interface to guide thru making new job
-  * [ ] `add <title> <description> <image>` will create job directly
-    * [ ] `--allow-multiple` on command above will allow multiple runners
+  * [x] `add <title> <description> <image>` will create job directly
 * [ ] `rm <id>` removes job from hub
 
 ### For Both
