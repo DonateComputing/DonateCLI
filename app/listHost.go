@@ -20,7 +20,7 @@ func List(auth api.AuthStruct, all bool) ([]types.Container, error) {
 
 	containers = filterContainers(containers, func(c types.Container) bool {
 		for _, j := range u.Running {
-			if c.Names[0] == j.Title {
+			if c.Names[0] == "/"+j.Title {
 				return true
 			}
 		}

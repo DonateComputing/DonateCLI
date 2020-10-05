@@ -15,7 +15,10 @@ func PullImage(image string) error {
 	}
 
 	closer, err := cli.ImagePull(context.Background(), image, types.ImagePullOptions{})
-	defer closer.Close()
+	if err != nil {
+		return err
+	}
 
-	return err
+	defer closer.Close()
+	return nil
 }

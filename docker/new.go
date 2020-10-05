@@ -24,7 +24,6 @@ func CreateNewContainer(image string, name string) (string, error) {
 		},
 		&container.HostConfig{
 			Privileged: false,
-			Isolation:  "hyperv",
 			Resources: container.Resources{
 				CPUShares: 4,
 				Memory:    gigabyte * 5,
@@ -37,6 +36,6 @@ func CreateNewContainer(image string, name string) (string, error) {
 		return "", err
 	}
 
-	cli.ContainerStart(context.Background(), cont.ID, types.ContainerStartOptions{})
-	return cont.ID, nil
+	err = cli.ContainerStart(context.Background(), cont.ID, types.ContainerStartOptions{})
+	return cont.ID, err
 }

@@ -41,10 +41,13 @@ func (c *StartCommand) Run() error {
 	}
 
 	username := c.fs.Arg(0)
-	title := c.fs.Arg(0)
+	title := c.fs.Arg(1)
 	id, err := app.Start(username, title, *auth)
+	if err != nil {
+		return err
+	}
 
-	fmt.Printf("Started '%s/%s' as [%s]", username, title, id)
+	fmt.Printf("Started '%s/%s' as '%s'\n", username, title, id)
 
 	return nil
 }
