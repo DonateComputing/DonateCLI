@@ -23,10 +23,7 @@ func Stop(user string, title string, auth api.AuthStruct) error {
 		if err != nil {
 			return err
 		}
-		err := api.ReturnJob(ref, api.JobReturnStruct{}, auth)
-		if err != nil {
-			return err
-		}
+		return api.ReturnJob(ref, api.JobReturnStruct{}, auth)
 	}
 
 	return fmt.Errorf("can not find job '%s/%s' on host", user, title)
@@ -38,6 +35,7 @@ func StopAll(auth api.AuthStruct) error {
 	if err != nil {
 		return err
 	}
+
 	for _, c := range list {
 		err := docker.StopContainer(c.ID)
 		if err != nil {

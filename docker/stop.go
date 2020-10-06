@@ -3,6 +3,7 @@ package docker
 import (
 	"context"
 
+	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
 )
 
@@ -14,5 +15,8 @@ func StopContainer(id string) error {
 	}
 
 	err = cli.ContainerStop(context.Background(), id, nil)
-	return err
+	if err != nil {
+		return err
+	}
+	return cli.ContainerRemove(context.Background(), id, types.ContainerRemoveOptions{})
 }

@@ -16,8 +16,8 @@ Part of a larger Donate Project
 * [x] `start <username> <title>` checks out and runs job with given id
 * [x] `stop` stops all jobs and returns them to hub
   * [x] `stop <username> <title>` stops only job with given id
-* [ ] `pause` pauses all jobs
-  * [ ] `pause <username> <title>` pauses only job with given id
+* [x] `pause` pauses all jobs
+  * [x] `pause <username> <title>` pauses only job with given id
 * [ ] `unpause` unpauses all paused jobs
   * [ ] `unpause <username> <title>` unpauses only job with given id
 * [ ] `prune` autoremove all 'completed' jobs

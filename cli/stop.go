@@ -42,7 +42,7 @@ func (c *StopCommand) Run() error {
 		if err != nil {
 			return err
 		}
-		fmt.Printf("Job '%s / %s' stopped and returned\n", c.fs.Arg(0), c.fs.Arg(1))
+		fmt.Printf("Job '%s/%s' stopped and returned\n", c.fs.Arg(0), c.fs.Arg(1))
 	case 0:
 		err = app.StopAll(*auth)
 		if err != nil {
