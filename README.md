@@ -14,8 +14,8 @@ Part of a larger Donate Project
   * [x] `-a` include jobs being run or completed
   * [x] `-u` filter to only jobs belonging to or run by user
 * [x] `start <username> <title>` checks out and runs job with given id
-* [ ] `stop` stops all jobs and returns them to hub
-  * [ ] `stop <username> <title>` stops only job with given id
+* [x] `stop` stops all jobs and returns them to hub
+  * [x] `stop <username> <title>` stops only job with given id
 * [ ] `pause` pauses all jobs
   * [ ] `pause <username> <title>` pauses only job with given id
 * [ ] `unpause` unpauses all paused jobs
