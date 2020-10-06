@@ -7,9 +7,9 @@ import (
 	"github.com/mfigurski80/DonateCLI/docker"
 )
 
-// Pause pauses given job
-func Pause(user string, title string, auth api.AuthStruct) error {
-	list, err := List(auth, false)
+// Unpause unpauses given job
+func Unpause(user string, title string, auth api.AuthStruct) error {
+	list, err := List(auth, true)
 	if err != nil {
 		return err
 	}
@@ -18,28 +18,28 @@ func Pause(user string, title string, auth api.AuthStruct) error {
 		if c.User != user || c.Title != title {
 			continue
 		}
-		return docker.PauseContainer(c.ID)
+		return docker.UnpauseContainer(c.ID)
 	}
 
 	return fmt.Errorf("can not find job '%s/%s' on host", user, title)
 }
 
-// PauseAll pauses all jobs present
-func PauseAll(auth api.AuthStruct) error {
-	list, err := List(auth, false)
+// UnpauseAll unpauses all paused jobs
+func UnpauseAll(auth api.AuthStruct) error {
+	list, err := List(auth, true)
 	if err != nil {
 		return err
 	}
 
 	for _, c := range list {
-		if c.State == "paused" {
+		if c.State != "paused" {
 			continue
 		}
-		err := docker.PauseContainer(c.ID)
+		err := docker.UnpauseContainer(c.ID)
 		if err != nil {
 			return err
 		}
 	}
 
-	return nil
+	return err
 }

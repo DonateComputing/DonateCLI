@@ -18,8 +18,8 @@ Part of a larger Donate Project
   * [x] `stop <username> <title>` stops only job with given id
 * [x] `pause` pauses all jobs
   * [x] `pause <username> <title>` pauses only job with given id
-* [ ] `unpause` unpauses all paused jobs
-  * [ ] `unpause <username> <title>` unpauses only job with given id
+* [x] `unpause` unpauses all paused jobs
+  * [x] `unpause <username> <title>` unpauses only job with given id
 * [ ] `prune` autoremove all 'completed' jobs
 
 ### For Author
