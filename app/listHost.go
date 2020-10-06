@@ -1,6 +1,8 @@
 package app
 
 import (
+	"fmt"
+
 	"github.com/docker/docker/api/types"
 	"github.com/mfigurski80/DonateCLI/api"
 	"github.com/mfigurski80/DonateCLI/docker"
@@ -26,12 +28,22 @@ func List(auth api.AuthStruct, all bool) ([]Container, error) {
 	}
 
 	containers := make([]Container, 0)
-	for _, c := range dContainers {
-		for _, j := range u.Running {
+OUTER:
+	for _, j := range u.Running {
+		for _, c := range dContainers {
 			if c.Names[0] == "/"+j.Title {
 				newCont := Container{c, j.User, j.Title}
 				containers = append(containers, newCont)
+				continue OUTER
 			}
+		}
+		if !all {
+			continue
+		}
+		// not found running? Update
+		err := api.ReturnJob(j, api.JobReturnStruct{}, auth)
+		if err != nil {
+			return nil, fmt.Errorf("Host list out of sync with Hub -- failed to correct containers: %v", err)
 		}
 	}
 

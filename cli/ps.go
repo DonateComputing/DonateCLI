@@ -50,7 +50,7 @@ func (c *PsCommand) Run() error {
 		fmt.Println("No jobs are currently running")
 	} else {
 		for _, item := range list {
-			fmt.Printf("[%s] %s %s\n", item.ID[:5], item.Image, item.State)
+			fmt.Printf("[%s] %s/%s %s (%s)\n", item.ID[:5], item.User, item.Title, item.State, item.Status)
 		}
 	}
 
