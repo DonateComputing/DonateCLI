@@ -6,26 +6,34 @@ import (
 	"github.com/mfigurski80/DonateCLI/docker"
 )
 
+// Container is struct that holds all container data
+type Container struct {
+	types.Container
+	User  string
+	Title string
+}
+
 // List returns list of all containers
-func List(auth api.AuthStruct, all bool) ([]types.Container, error) {
+func List(auth api.AuthStruct, all bool) ([]Container, error) {
 	u, err := api.GetUser(auth)
 	if err != nil {
-		return []types.Container{}, nil
+		return nil, nil
 	}
 
-	containers, err := docker.ListContainers(all)
+	dContainers, err := docker.ListContainers(all)
 	if err != nil {
-		return containers, nil
+		return nil, nil
 	}
 
-	containers = filterContainers(containers, func(c types.Container) bool {
+	containers := make([]Container, 0)
+	for _, c := range dContainers {
 		for _, j := range u.Running {
 			if c.Names[0] == "/"+j.Title {
-				return true
+				newCont := Container{c, j.User, j.Title}
+				containers = append(containers, newCont)
 			}
 		}
-		return false
-	})
+	}
 
 	return containers, nil
 }

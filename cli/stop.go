@@ -3,6 +3,8 @@ package cli
 import (
 	"flag"
 	"fmt"
+
+	"github.com/mfigurski80/DonateCLI/app"
 )
 
 // NewStopCommand creates default stop command
@@ -29,6 +31,26 @@ func (c *StopCommand) Init(args []string) error {
 
 // Run executes the stop command
 func (c *StopCommand) Run() error {
-	fmt.Printf("Running STOP command. Args are %v\n", c.fs.Args())
+	auth, err := readAuth()
+	if err != nil {
+		return err
+	}
+
+	switch c.fs.NArg() {
+	case 2:
+		err = app.Stop(c.fs.Arg(0), c.fs.Arg(1), *auth)
+		if err != nil {
+			return err
+		}
+		fmt.Printf("Job '%s / %s' stopped and returned\n", c.fs.Arg(0), c.fs.Arg(1))
+	case 0:
+		err = app.StopAll(*auth)
+		if err != nil {
+			return err
+		}
+		fmt.Println("All jobs stopped and returned")
+	default:
+		fmt.Println("Usage: stop <username> <title>")
+	}
 	return nil
 }
