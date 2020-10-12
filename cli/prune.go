@@ -3,6 +3,8 @@ package cli
 import (
 	"flag"
 	"fmt"
+
+	"github.com/mfigurski80/DonateCLI/app"
 )
 
 // NewPruneCommand creates default prune command
@@ -29,6 +31,15 @@ func (c *PruneCommand) Init(args []string) error {
 
 // Run executes the prune command
 func (c *PruneCommand) Run() error {
-	fmt.Printf("Running PRUNE command. Args are %v\n", c.fs.Args())
-	return nil
+
+	if c.fs.NArg() < 2 {
+		return fmt.Errorf("usage: prune <username> <password> ::(auth to dockerhub.io)")
+	}
+
+	auth, err := readAuth()
+	if err != nil {
+		return err
+	}
+
+	return app.Prune(*auth, c.fs.Arg(0), c.fs.Arg(1))
 }

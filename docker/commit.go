@@ -19,8 +19,7 @@ func ContainerCommit(id string, name string) (string, error) {
 		return "", err
 	}
 
-	newTag := "dockerhub.io/" + name + ":completed"
-	cli.ImageTag(context.Background(), res.ID, newTag)
+	cli.ImageTag(context.Background(), res.ID, name)
 
 	return res.ID, nil
 }

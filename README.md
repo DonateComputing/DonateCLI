@@ -20,12 +20,13 @@ Part of a larger Donate Project
   * [x] `pause <username> <title>` pauses only job with given id
 * [x] `unpause` unpauses all paused jobs
   * [x] `unpause <username> <title>` unpauses only job with given id
-* [ ] `prune` autoremove all 'completed' jobs
+* [x] `prune` autoremove and mark completed all 'exited' jobs
 
 ### For Author
 
 * [ ] `add` opens interface to guide thru making new job
   * [x] `add <title> <description> <image>` will create job directly
+* [ ] `list` lists all images created by user
 * [ ] `rm <id>` removes job from hub
 
 ### For Both
