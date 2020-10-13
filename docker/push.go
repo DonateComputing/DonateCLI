@@ -4,8 +4,6 @@ import (
 	"context"
 	"encoding/base64"
 	"encoding/json"
-	"io"
-	"os"
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
@@ -30,7 +28,7 @@ func PushImage(username string, password string, name string) error {
 	}
 
 	defer pusher.Close()
-	io.Copy(os.Stdout, pusher)
+	// io.Copy(os.Stdout, pusher)
 
 	return nil
 }
