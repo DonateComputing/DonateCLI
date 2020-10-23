@@ -26,7 +26,7 @@ Part of a larger Donate Project
 
 * [ ] `add` opens interface to guide thru making new job
   * [x] `add <title> <description> <image>` will create job directly
-* [ ] `rm <id>` removes job from hub
+* [x] `rm <id>` removes job from hub
 
 ### For Both
 

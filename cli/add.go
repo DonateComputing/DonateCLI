@@ -35,7 +35,7 @@ func (c *AddCommand) Init(args []string) error {
 func (c *AddCommand) Run() error {
 	auth, err := readAuth()
 	if err != nil {
-		return err
+		return errors.New("Could not find auth file. Please run `login` command")
 	}
 	args := c.fs.Args()
 

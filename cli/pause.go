@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"errors"
 	"flag"
 	"fmt"
 
@@ -33,7 +34,7 @@ func (c *PauseCommand) Init(args []string) error {
 func (c *PauseCommand) Run() error {
 	auth, err := readAuth()
 	if err != nil {
-		return err
+		return errors.New("Could not find auth file. Please run `login` command")
 	}
 
 	switch c.fs.NArg() {

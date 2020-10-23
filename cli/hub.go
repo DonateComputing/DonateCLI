@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"errors"
 	"flag"
 	"fmt"
 
@@ -46,7 +47,7 @@ func (c *HubCommand) Run() error {
 
 	auth, err := readAuth()
 	if err != nil {
-		return err
+		return errors.New("Could not find auth file. Please run `login` command")
 	}
 
 	jobs, err := app.ListHub(*auth, c.isUser)
@@ -56,7 +57,10 @@ func (c *HubCommand) Run() error {
 	for _, j := range jobs {
 		free := "free"
 		if j.Runner != "" {
-			free = "taken"
+			free = "being run..."
+		}
+		if j.CompletedImage != "" {
+			free = j.CompletedImage
 		}
 		fmt.Printf("\t%s/%s : %s [%s] %s\n", j.Author, j.Title, j.Description, j.OriginalImage, free)
 	}

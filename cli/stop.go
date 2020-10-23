@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"errors"
 	"flag"
 	"fmt"
 
@@ -40,7 +41,7 @@ func (c *StopCommand) Run() error {
 	case 2:
 		err = app.Stop(c.fs.Arg(0), c.fs.Arg(1), *auth)
 		if err != nil {
-			return err
+			return errors.New("Could not find auth file. Please run `login` command")
 		}
 		fmt.Printf("Job '%s/%s' stopped and returned\n", c.fs.Arg(0), c.fs.Arg(1))
 	case 0:

@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"errors"
 	"flag"
 	"fmt"
 
@@ -38,7 +39,7 @@ func (c *PruneCommand) Run() error {
 
 	auth, err := readAuth()
 	if err != nil {
-		return err
+		return errors.New("Could not find auth file. Please run `login` command")
 	}
 
 	return app.Prune(*auth, c.fs.Arg(0), c.fs.Arg(1))

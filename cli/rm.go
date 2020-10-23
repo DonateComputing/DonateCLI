@@ -4,6 +4,8 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+
+	"github.com/mfigurski80/DonateCLI/app"
 )
 
 // NewRmCommand creates a default rm command
@@ -34,7 +36,11 @@ func (c *RmCommand) Run() error {
 		return errors.New("Id of owned public job is required")
 	}
 
-	fmt.Printf("Running RM %v command!\n", c.fs.Arg(0))
+	auth, err := readAuth()
+	if err != nil {
+		return errors.New("Could not find auth file. Please run `login` command")
+	}
 
-	return nil
+	fmt.Printf("Running RM %v command!\n", c.fs.Arg(0))
+	return app.Remove(*auth, c.fs.Arg(0))
 }
