@@ -54,7 +54,11 @@ func (c *HubCommand) Run() error {
 		return err
 	}
 	for _, j := range jobs {
-		fmt.Printf("\t%s/%s : %s [%s]\n", j.Author, j.Title, j.Description, j.OriginalImage)
+		free := "free"
+		if j.Runner != "" {
+			free = "taken"
+		}
+		fmt.Printf("\t%s/%s : %s [%s] %s\n", j.Author, j.Title, j.Description, j.OriginalImage, free)
 	}
 	if len(jobs) <= 0 {
 		fmt.Println("Not jobs are currently posted")
