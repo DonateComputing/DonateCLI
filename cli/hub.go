@@ -12,8 +12,7 @@ func NewHubCommand() *HubCommand {
 	cmd := &HubCommand{
 		fs: flag.NewFlagSet("hub", flag.ContinueOnError),
 	}
-	cmd.fs.BoolVar(&cmd.isAll, "a", false, "flag to include all taken and completed jobs")
-	cmd.fs.BoolVar(&cmd.isUser, "u", false, "flag to show only user jobs")
+	cmd.fs.BoolVar(&cmd.isUser, "u", false, "flag to show existing user jobs")
 
 	return cmd
 }
@@ -22,7 +21,6 @@ func NewHubCommand() *HubCommand {
 type HubCommand struct {
 	fs *flag.FlagSet
 
-	isAll  bool
 	isUser bool
 }
 
@@ -39,7 +37,8 @@ func (c *HubCommand) Init(args []string) error {
 // Run executes hub command
 func (c *HubCommand) Run() error {
 
-	if args := c.fs.Args(); c.fs.NArg() > 0 && args[0] == "ps" {
+	args := c.fs.Args()
+	if len(args) > 0 && args[0] == "ps" {
 		recmd := NewHubCommand()
 		recmd.Init(args[1:])
 		return recmd.Run()
@@ -50,12 +49,16 @@ func (c *HubCommand) Run() error {
 		return err
 	}
 
-	jobs, err := app.ListHub(*auth, c.isAll, c.isUser)
+	jobs, err := app.ListHub(*auth, c.isUser)
 	if err != nil {
 		return err
 	}
 	for _, j := range jobs {
-		fmt.Printf("\t%s/%s : %s [%s]\n", j.Author, j.Title, j.Description, j.OriginalImage)
+		free := "free"
+		if j.Runner != "" {
+			free = "taken"
+		}
+		fmt.Printf("\t%s/%s : %s [%s] %s\n", j.Author, j.Title, j.Description, j.OriginalImage, free)
 	}
 	if len(jobs) <= 0 {
 		fmt.Println("Not jobs are currently posted")
