@@ -10,9 +10,9 @@ Part of a larger Donate Project
 
 * [x] `ps` lists all jobs currently being run on client
   * [x] `-a` include completed jobs on client
-* [x] `hub` and `hub ps` list all jobs waiting for runner
-  * [x] `-a` include jobs being run or completed
-  * [x] `-u` filter to only jobs belonging to or run by user
+* [x] `hub` lists all jobs waiting for runner
+  * [x] `-u` list own user-created jobs
+  * [x] `hub ps` is functionally equivalent to hub
 * [x] `start <username> <title>` checks out and runs job with given id
 * [x] `stop` stops all jobs and returns them to hub
   * [x] `stop <username> <title>` stops only job with given id
@@ -26,7 +26,6 @@ Part of a larger Donate Project
 
 * [ ] `add` opens interface to guide thru making new job
   * [x] `add <title> <description> <image>` will create job directly
-* [ ] `list` lists all images created by user
 * [ ] `rm <id>` removes job from hub
 
 ### For Both
